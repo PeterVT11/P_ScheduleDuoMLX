@@ -5,7 +5,7 @@ The library adds Peters alternativ duo-scheduler to MobaLedLib.
 More information see https://wiki.mobaledlib.de.
 
 Questions / suggestions / praise / ...
-  mobaledlibl@gmx.de
+  mobaledlib@gmx.de
 
 **Revision History:**
 
