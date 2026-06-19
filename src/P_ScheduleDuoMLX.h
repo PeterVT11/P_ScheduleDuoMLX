@@ -27,7 +27,8 @@ P_ScheduleDuoExtension
 V 0.10  14.12.2025	Aufbauend auf P_Schedule 0.21.
 V 0.11  06.03.2026	Anpassung my_FirstLedStatus auf P_Schedule 0.21.
                     Debugausgaben.
-
+V 0.12	18.06.2026	Random anpassen wegen Pico 2W. Random darf nicht mit Zufall = 0 aufgerufen werden (Danke Jörn).
+V 0.13	18.06.2026	Fehlerbehebung.
 				
 ToDo:
 
@@ -35,7 +36,7 @@ ToDo:
 		
 */
 #ifdef _PeterDebugDuo
-	#define MyProgDuo_MSG "0.11"				// Debugausgabe der Version
+	#define MyProgDuo_MSG "0.13"				// Debugausgabe der Version
 #endif
 /*
 Definition in InitDefs.h:
@@ -302,13 +303,33 @@ private:
 		uint16_t tempSchalt = 0;
 		if (LedIs_OnOff == myLedOff)				// LED ist Off  -- Start wird berechnet
 		{
-			SwitchValA = random(512 + my_startA - zufallA, 512 + my_startA + zufallA);			//	###
-			SwitchValB = random(512 + my_startB - zufallB, 512 + my_startB + zufallB);
+			if (zufallA == 0) 						// 0.12 18.06.26
+			{
+				SwitchValA = 512 + my_startA;
+			} else {
+				SwitchValA = random(512 + my_startA - zufallA, 512 + my_startA + zufallA);			//	
+			}
+			if (zufallB == 0)						// 0.12 18.06.26
+			{
+				SwitchValB = 512 + my_startB;
+			} else {
+				SwitchValB = random(512 + my_startB - zufallB, 512 + my_startB + zufallB);
+			}
 		} 
 		else 
 		{											// LED ist On -- Ende wird berechnet		####
-			SwitchValA = random(512 + my_endA - zufallA, 512 + my_endA + zufallA);
-			SwitchValB = random(512 + my_endB - zufallB, 512 + my_endB + zufallB);
+			if (zufallA == 0) 						// 0.12 18.06.26
+			{
+				SwitchValA = 512 + my_endA;
+			} else {
+				SwitchValA = random(512 + my_endA - zufallA, 512 + my_endA + zufallA);
+			}
+			if (zufallB == 0)						// 0.12 18.06.26
+			{
+				SwitchValB = 512 + my_endB;
+			} else {
+				SwitchValB = random(512 + my_endB - zufallB, 512 + my_endB + zufallB);
+			}
 		}
 		if (SwitchValA >= 512)						
 		{
